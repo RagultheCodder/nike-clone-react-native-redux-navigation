@@ -6,21 +6,23 @@ import {
   FlatList,
   useWindowDimensions,
   ScrollView,
-  Pressable
+  Pressable,
 } from "react-native";
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
+import { cartSlice } from "../store/cartSlice";
 
 const ProductDetailsScreen = () => {
+  const product = useSelector((state) => state.data.selectedProduct);
+  const dispatch = useDispatch();
 
-  const product = useSelector(state => state.data.selectedProduct);
-  
   // Get the Device Width and Height
   const { width } = useWindowDimensions();
 
   const addToCard = () => {
-    console.log('Add to cart')
-  }
+    dispatch(cartSlice.actions.addCartItem({product}));
+  };
+  
   return (
     <View>
       <ScrollView stickyHeaderIndices={[0]}>
@@ -72,21 +74,21 @@ const styles = StyleSheet.create({
     lineHeight: 30,
     fontWeight: "300",
   },
-  button:{
-    position: 'absolute',
+  button: {
+    position: "absolute",
     bottom: 30,
-    backgroundColor: 'black',
-    width: '80%',
-    alignItems: 'center',
-    alignSelf: 'center',
+    backgroundColor: "black",
+    width: "80%",
+    alignItems: "center",
+    alignSelf: "center",
     padding: 20,
     borderRadius: 50,
   },
   buttonText: {
-    color: 'white',
-    fontWeight: '500',
-    fontSize: 16
-  }
+    color: "white",
+    fontWeight: "500",
+    fontSize: 16,
+  },
 });
 
 export default ProductDetailsScreen;
